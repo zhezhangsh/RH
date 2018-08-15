@@ -21,7 +21,7 @@ TrimLongRead <- function(id, seq, qual, length, step=length, min.length=-Inf, ou
     z <- cbind(from=x[1:length(y)], to=y);
     z[z>n] <- n;
 
-    ii <- paste(i, z[, 1], sep='___');
+    ii <- paste(z[, 1], i, sep='__');
     ss <- apply(z, 1, function(z) substr(s, z[1], z[2]));
     qq <- apply(z, 1, function(z) substr(q, z[1], z[2]));
     oo <- data.frame(from=z[, 1], to=z[, 2], seq=ss, qual=qq, stringsAsFactors = FALSE);
