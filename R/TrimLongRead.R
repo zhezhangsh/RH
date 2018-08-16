@@ -9,6 +9,17 @@ TrimLongRead <- function(id, seq, qual, length, step=length, min.length=-Inf, ou
   # thread  Number of threads for parallele computing
 
   if (tolower(output[1])=='fastq') fnm <- paste(filename, '.fastq', sep='') else fnm <- '';
+  if (file.exists(fnm)) file.remove(fnm);
+
+  newID <- function(i, loc) {
+    w <- rev(gregexpr('/', i)[[1]])[1];
+    a <- substr(i, 1, w-1);
+    b <- strsplit(substr(i, w+1, nchar(i)), '_')[[1]];
+    c <- as.integer(b[1]);
+    d <- c + loc[, 1] - 1;
+    e <- c + loc[, 2];
+    paste(a, '/', d, '_', e, sep='');
+  }
 
   trimLongRead <- function(x) {
     i <- x[[1]];
@@ -23,7 +34,7 @@ TrimLongRead <- function(id, seq, qual, length, step=length, min.length=-Inf, ou
     z <- cbind(from=x[1:length(y)], to=y);
     z[z>n] <- n;
 
-    ii <- paste(z[, 1], i, sep='__');
+    ii <- newID(i, z);
     ss <- apply(z, 1, function(z) substr(s, z[1], z[2]));
     qq <- apply(z, 1, function(z) substr(q, z[1], z[2]));
     oo <- data.frame(from=z[, 1], to=z[, 2], seq=ss, qual=qq, stringsAsFactors = FALSE);
