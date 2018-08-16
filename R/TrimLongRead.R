@@ -39,7 +39,10 @@ TrimLongRead <- function(id, seq, qual, length, step=length, min.length=-Inf, ou
   if (thread <= 1) {
     trimmed <- lapply(1:length(id), function(i) {
       trimmed <- trimLongRead(list(id[i], seq[i], qual[i], length, step));
-      if (tolower(output[1])=='fastq') writeFastq(fnm, trimmed, TRUE);
+      trimmed <- trimmed[trimmed$to-trimmed$from+1>=min.length, , drop=FALSE];
+      if (nrow(trimmed) > 0) {
+        if (tolower(output[1])=='fastq') writeFastq(fnm, trimmed, TRUE);
+      }
     });
   } else {
     x <- lapply(1:length(id), function(i) list(id[i], seq[i], qual[i], length, step));
