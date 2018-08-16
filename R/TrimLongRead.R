@@ -8,6 +8,8 @@ TrimLongRead <- function(id, seq, qual, length, step=length, min.length=-Inf, ou
   # output  Output format
   # thread  Number of threads for parallele computing
 
+  if (tolower(output[1])=='fastq') fnm <- paste(filename, '.fastq', sep='') else fnm <- '';
+
   trimLongRead <- function(x) {
     i <- x[[1]];
     s <- x[[2]];
@@ -29,9 +31,16 @@ TrimLongRead <- function(id, seq, qual, length, step=length, min.length=-Inf, ou
 
     oo;
   };
-
+  writeFastq <- function(fnm, trimmed, append=FALSE) {
+    lns <- rbind(paste('@', rownames(trimmed), sep=''), trimmed$seq, rep('+', nrow(trimmed)), trimmed$qual);
+    lns <- as.vector(lns);
+    if (append) write(lns, fnm, append = TRUE) else writeLines(lns, fnm);
+  }
   if (thread <= 1) {
-    trimmed <- lapply(1:length(id), function(i) trimLongRead(list(id[i], seq[i], qual[i], length, step)));
+    trimmed <- lapply(1:length(id), function(i) {
+      trimmed <- trimLongRead(list(id[i], seq[i], qual[i], length, step));
+      if (tolower(output[1])=='fastq') writeFastq(fnm, trimmed, TRUE);
+    });
   } else {
     x <- lapply(1:length(id), function(i) list(id[i], seq[i], qual[i], length, step));
 
@@ -39,15 +48,10 @@ TrimLongRead <- function(id, seq, qual, length, step=length, min.length=-Inf, ou
     cl <- makeCluster(thread, type='SOCK');
     trimmed <- clusterApplyLB(cl, x, trimLongRead);
     stopCluster(cl);
+
+    trimmed <- do.call('rbind', trimmed);
+    trimmed <- trimmed[trimmed$to-trimmed$from+1>=min.length, , drop=FALSE];
+
+    if (tolower(output[1])=='fastq') writeFastq(fnm, trimmed);
   };
-
-  trimmed <- do.call('rbind', trimmed);
-  trimmed <- trimmed[trimmed$to-trimmed$from+1>=min.length, , drop=FALSE];
-
-  if (tolower(output[1])=='fastq') {
-    fnm <- paste(filename, '.fastq', sep='');
-    lns <- rbind(paste('@', rownames(trimmed), sep=''), trimmed$seq, rep('+', nrow(trimmed)), trimmed$qual);
-    lns <- as.vector(lns);
-    writeLines(lns, fnm);
-  } else {}
 }
