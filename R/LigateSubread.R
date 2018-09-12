@@ -31,4 +31,6 @@ LigateSubread <- function(seqs, hole=NA, ind1=NA, ind2=NA) {
     paste(seq, collapse='');
   });
   names(seq) <- ids;
+  
+  seq;
 }
