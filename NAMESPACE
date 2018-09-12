@@ -4,6 +4,6 @@ export("CountPairwiseMatchByWindow");
 export("ExtractSamField");
 export("LigateSubread");
 export("PlotPalindrome");
-export("ScoreSegmentAlign");
+export("ScoreSegmentAlignment");
 export("TrimLongRead");
 
