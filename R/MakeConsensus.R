@@ -30,7 +30,7 @@ WeightConsensus <- function(mtrx, method=c('rank', 'r', 'count')) {
 
   out <- cbind(tbl, Count=ttl, Gap=apply(mtrx, 1, function(x) length(x[x=='-'])));
 
-  list(weighted=out, weight=w);
+  list(weighted=out, weight=weight);
 };
 
 CallConsensus <- function(weighted) {
