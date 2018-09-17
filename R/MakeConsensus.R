@@ -23,7 +23,7 @@ WeightConsensus <- function(mtrx, method=c('rank', 'r', 'count')) {
     for (j in 1:length(ltt)) {
       ind <- which(x==ltt[j]);
       ind <- ind[ind>=rng[1] & ind<=rng[2]];
-      tbl[ind, j] <- tbl[ind, j] + w[i];
+      tbl[ind, j] <- tbl[ind, j] + weight[i];
     };
   };
   rownames(tbl) <- 1:nrow(tbl);
