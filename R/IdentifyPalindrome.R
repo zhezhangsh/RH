@@ -3,7 +3,7 @@ IdentifyPalindrome <- function(seq, size, step, rate=0.75, lmin=1500, name=names
   require(GenomicRanges);
 
   if (isSingleString(seq)) seq <- DNAString(seq);
-  if (identical(NA, name) | identical(NULL, name) | name=='') name <- paste('Len', nchar(seq), sep='');
+  if (identical(NA, name) | identical(NULL, name) | name=='') name <- paste('Len', length(seq), sep='');
 
   ind <- seq(1, length(seq)-size, step);
   sub <- DNAStringSet(lapply(ind, function(i) subseq(seq, i, width=size)));
@@ -35,7 +35,7 @@ IdentifyPalindrome <- function(seq, size, step, rate=0.75, lmin=1500, name=names
   ttl <- Reduce('c', aln);
   ttl$subread <- rep(names(sub), sapply(aln, length));
 
-  cov <- coverage(ttl, width=nchar(seq))[[1]];
+  cov <- coverage(ttl, width=length(seq))[[1]];
 
   # Segmentation
   smt <- as.vector(runmean(cov, k=2*round(lmin/4)+1, endrule = 'constant'));
