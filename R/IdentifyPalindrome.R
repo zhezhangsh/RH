@@ -78,7 +78,7 @@ OptimizePairwiseAlignment <- function(s1, s2, window.size=50, min.similarity=0.8
 
   agr <- Rle(as.integer(m1==m2));
   rnm <- runmean(agr, k=2*window.size+1, endrule = 'constant');
-  ind <- which(rnm>=min.similarity);
+  ind <- base::which(as.vector(rnm)>=min.similarity);
   if (length(ind)==0) rng <- range(which(rnm==max(rnm))) else rng <- range(ind);
 
   t1 <- m1[rng[1]:rng[2]];
