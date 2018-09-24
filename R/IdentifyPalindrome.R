@@ -5,7 +5,7 @@ IdentifyPalindrome <- function(seq, size, step, rate=0.75, lmin=1500, name=names
   if (isSingleString(seq)) seq <- DNAString(seq);
   if (identical(NA, name) | identical(NULL, name) | name=='') name <- paste('Len', nchar(seq), sep='');
 
-  ind <- seq(1, nchar(seq)-size, step);
+  ind <- seq(1, length(seq)-size, step);
   sub <- DNAStringSet(lapply(ind, function(i) subseq(seq, i, width=size)));
   names(sub) <- ind;
 
@@ -38,7 +38,7 @@ IdentifyPalindrome <- function(seq, size, step, rate=0.75, lmin=1500, name=names
   cov <- coverage(ttl, width=nchar(seq))[[1]];
 
   # Segmentation
-  smt <- as.vector(runmean(cov, k=2*round(lmin/2)+1, endrule = 'constant'));
+  smt <- as.vector(runmean(cov, k=2*round(lmin/4)+1, endrule = 'constant'));
   names(smt) <- 1:length(smt);
   inc <- rep(0, length(smt));
   for (i in 1:length(sub)) inc[as.numeric(names(sub)[i]):(as.numeric(names(sub)[i])+size)] <- 1;

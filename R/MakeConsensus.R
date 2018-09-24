@@ -16,7 +16,7 @@ MakeConsensus <- function(seq, ref=NA, method=c("Muscle", "ClustalW", "ClustalOm
   # Run MSA and remove sequence(s) not agree with the others
   removed <- c();
   pss <- FALSE;
-  while(!pss & length(seq)>2) { print(length(seq));
+  while(!pss & length(seq)>2) {
     seq <- seq[!(names(seq) %in% removed)];
 
     # Run consensus algorithm
@@ -36,7 +36,7 @@ MakeConsensus <- function(seq, ref=NA, method=c("Muscle", "ClustalW", "ClustalOm
 
   # Remove sequences hurts the consensus by reducing number of bases
   pss <- FALSE;
-  while(!pss & length(seq)>2) { print(length(seq));
+  while(!pss & length(seq)>2) {
     # Base by base
     aln <- do.call('cbind', strsplit(as.character(msa), ''));
     rownames(aln) <- 1:nrow(aln);
