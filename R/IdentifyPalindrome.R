@@ -96,9 +96,10 @@ OptimizePairwiseAlignment <- function(s1, s2, window.size=50, min.similarity=0.8
 
   pw0 <- pairwiseAlignment(t1, t2);
   smm <- summary(pw0);
+  idl <- indel(pw0);
 
   out <- c(score(pw0), rng[2]-rng[1]+1, di, stt1, end1, stt2, end2,
-           smm@nmatch, smm@nmismatch, smm@ninsertion[2], smm@ndeletion[2]);
+           nmatch(pw0), nmismatch(pw0), sum(width(idl@insertion)), sum(width(idl@deletion)));
   names(out) <- c('Score', 'Length', 'Strand', 'Start1', 'End1', 'Start2', 'End2',
                      'Match', 'Mismatch', 'Insertion', 'Deletion');
 
