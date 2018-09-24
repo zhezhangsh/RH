@@ -1,5 +1,81 @@
-WeightConsensus <- function(mtrx, method=c('rank', 'r', 'count')) {
-  ltt <- unique(as.vector(mtrx));
+MakeConsensus <- function(seq, ref=NA, method=c("Muscle", "ClustalW", "ClustalOmega"),
+                          weight=c('r', 'rank', 'count')) {
+  require(msa);
+  require(Biostrings);
+
+  runMsa <- function(seq, method) {
+    if (tolower(method)[1]=='clustalw') {
+      msaClustalW(seq, order='input');
+    } else if (tolower(method)[1]=='clustalomega') {
+      msaClustalOmega(seq, order='input');
+    } else {
+      msaMuscle(seq, order='input');
+    };
+  };
+
+  # Run MSA and remove sequence(s) not agree with the others
+  removed <- c();
+  pss <- FALSE;
+  while(!pss & length(seq)>2) { print(length(seq));
+    seq <- seq[!(names(seq) %in% removed)];
+
+    # Run consensus algorithm
+    msa <- runMsa(seq, method);
+
+    # Base by base
+    aln <- do.call('cbind', strsplit(as.character(msa), ''));
+    rownames(aln) <- 1:nrow(aln);
+
+    # Weigth sequences
+    wgt <- WeightConsensus(aln, method='count');
+
+    if (min(wgt[[2]])<(0.5*(length(seq)-1))) {
+      removed <- c(removed, names(seq)[wgt[[2]]==min(wgt[[2]])]);
+    } else pss <- TRUE;
+  };
+
+  # Remove sequences hurts the consensus by reducing number of bases
+  pss <- FALSE;
+  while(!pss & length(seq)>2) { print(length(seq));
+    # Base by base
+    aln <- do.call('cbind', strsplit(as.character(msa), ''));
+    rownames(aln) <- 1:nrow(aln);
+
+    wgt <- WeightConsensus(aln, method=weight);
+
+    # Call consensus
+    rg1 <- apply(aln, 2, function(a) range(which(a!='-')));
+    rg0 <- c(max(rg1[1, ]), min(rg1[2, ]));
+    cll <- CallConsensus(wgt$weighted[rg0[1]:rg0[2], , drop=FALSE]);
+    cll <- cll[cll!='-'];
+
+    sm0 <- sum(apply(cbind(cll, aln[names(cll), ]), 1, function(x) length(x[x==x[1]]))-1);
+    sm1 <- sapply(1:ncol(aln), function(i) {
+      a <- aln[, -i];
+      w <- WeightConsensus(a, method=weight);
+      r <- apply(a, 2, function(a) range(which(a!='-')));
+      r <- c(max(r[1, ]), min(r[2, ]));
+      c <- CallConsensus(w$weighted[r[1]:r[2], , drop=FALSE]);
+      c <- c[c!='-'];
+      n <- apply(cbind(c, a[names(c), ]), 1, function(x) length(x[x==x[1]]))-1;
+      sum(n);
+    });
+
+    if (max(sm1) < sm0) pss <- TRUE else {
+      removed <- c(removed, names(seq)[sm1==max(sm1)][1]);
+      seq <- seq[!(names(seq) %in% removed)];
+
+      # Run consensus algorithm
+      msa <- runMsa(seq, method);
+    }
+  };
+
+  list(consensus=paste(cll, collapse=''), range=rg0, base=aln, alignment=msa, weight=wgt,
+       removed=removed, input=list(sequence=seq, reference=ref, method=method, weight=weight));
+};
+
+WeightConsensus <- function(mtrx, method=c('r', 'rank', 'count')) {
+  ltt <- c('-', 'A', 'C', 'G', 'T')
   tbl <- sum <- matrix(0, nr=nrow(mtrx), nc=length(ltt), dimnames = list(rownames(mtrx), ltt));
   ttl <- rep(0, nrow(mtrx));
   rng <- apply(mtrx, 2, function(a) range(which(a!='-')));
@@ -44,7 +120,7 @@ CallConsensus <- function(weighted) {
   cll;
 }
 
-AlignConsensus <- function(con, ref) {
+AlignConsensus2Reference <- function(con, ref) {
   require(S4Vectors);
   require(Biostrings);
 

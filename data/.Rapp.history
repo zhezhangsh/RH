@@ -1,0 +1,34 @@
+load("/Users/zhangz/Documents/RH/data/seq.rds")
+seq <- readRDS("/Users/zhangz/Documents/RH/data/seq.rds")
+seq
+size <- step <- 200
+rate <- 0.75
+lmin <- 1500
+name <- 'test'
+require(Biostrings);#
+  require(GenomicRanges);#
+#
+  if (isSingleString(seq)) seq <- DNAString(seq);#
+  if (identical(NA, name) | name=='') name <- paste('Len', nchar(seq), sep='');#
+#
+  ind <- seq(1, nchar(seq)-size, step);#
+  sub <- DNAStringSet(lapply(ind, function(i) subseq(seq, i, width=size)));#
+  names(sub) <- ind;#
+#
+  frq <- alphabetFrequency(sub);#
+  sub <- sub[frq[, 'N']/size <= (1-rate)];#
+#
+  aln <- lapply(names(sub), function(nm) { print(nm);#
+    mp1 <- matchPattern(sub[[nm]], seq, max.mismatch = round(size*(1-rate)),#
+                        with.indels = TRUE);#
+    mp1 <- mp1[start(mp1) != as.integer(nm)];#
+    mp2 <- matchPattern(reverseComplement(sub[[nm]]), seq, max.mismatch = round(size*(1-rate)),#
+                        with.indels = TRUE);#
+#
+    if (length(mp1) > 0) gr1 <- GRanges(name, IRanges(start(mp1), end(mp1)), strand='+') else#
+      gr1 <- GRanges();#
+    if (length(mp2) > 0) gr2 <- GRanges(name, IRanges(start(mp2), end(mp2)), strand='-') else#
+      gr2 <- GRanges();#
+    c(gr1, gr2);#
+  });#
+  names(aln) <- names(sub);

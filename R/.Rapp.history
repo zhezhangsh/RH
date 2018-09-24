@@ -1,0 +1,300 @@
+dim(x)
+smm[1:2, ]
+c <- smm[grep('hsa-miR-874', smm[[1]]), ]
+dim(c)
+c
+id[grep('-[1-3]-[35]p$')]
+id[grep('-[1-3]-[35]p$', id)]
+id[grep('hsa-miR-129', id)]
+id[grep('hsa-miR-129-', id)]
+load("/Users/zhangz/Google Drive/Projects/Koptyra/2017-07_RNA_Platform_Comparison/task01/r/htg_count.rds")
+id1 <- readRDS("/Users/zhangz/Google Drive/Projects/Koptyra/2017-07_RNA_Platform_Comparison/task01/r/htg_count.rds")
+id[grep('hsa-miR-129-', id)]
+id[grep('hsa-miR-129', id)]
+id[grep('hsa-miR-219', id)]
+id1[grep('hsa-miR-219', id1)]
+id1 <- rownames(id1)
+id1[grep('hsa-miR-219', id1)]
+head(id1)
+id1[grep('miR-219', id1)]
+load("/Users/zhangz/Google Drive/Projects/Sullivan/2017-10_ChIPseq_Multi/mean_cov.rds")
+mn <- readRDS("/Users/zhangz/Google Drive/Projects/Sullivan/2017-10_ChIPseq_Multi/mean_cov.rds")
+mn
+dim(mn)
+mn[, 1:2]
+mn[1, ]
+mn[, 1]
+length(mn[is.na(mn)])
+mn
+dim(mn)
+mn0 <- mn[, 1:108]
+mn1 <- mn[, 109:ncol(mn)]
+dim(mn0)
+mn0[, 1]
+barplot(m0[1, ])
+barplot(mn0[1, ])
+barplot(mn1[1, ])
+dim(mn1)
+x <- colMeans(mn1[1:10, ])
+dim(x)
+length(x)
+summary(x)
+hist(x)
+baplot(sort(x))
+barplot(sort(x))
+max(x)/min(x)
+dir()
+load("/Users/zhangz/Google Drive/Projects/Sullivan/2017-04_RNAseq-H3K4me3_Manuscript/r/GWAS/pha002848_phred.rds")
+x <- readRDS("/Users/zhangz/Google Drive/Projects/Sullivan/2017-04_RNAseq-H3K4me3_Manuscript/r/GWAS/pha002848_phred.rds")
+length(x)
+plot(1:20, pch=1:20)
+library(awsomics);#
+#
+d1 <- readRDS('data_coding.rds');#
+d2 <- readRDS('data_lnc.rds');#
+d3 <- readRDS('data_re.rds');#
+d4 <- readRDS('data_tss.rds');#
+#
+col <- c('#FF888888', '#FF8888', '#8888FF88', '#8888FF', '#88FF8888', '#88FF88');#
+ds <- list('Coding gene'=d1, 'lncRNA'=d2, 'Repetitive element'=d3, 'H3K4me3'=d4);#
+ns <- c(3,3,3,6);#
+pcas <- lapply(ds, function(d) prcomp(t(d)));#
+#
+quartz(w=6, h=6);#
+par(mar=c(5,5,2,2), mfrow=c(2,2)); #
+#
+sapply(1:4, function(i) {#
+	x <- pcas[[i]]$x; #
+	plot(x[, 1], x[, 2], col=rep(col, each=ns[i]), cex=1.5, pch=rep(rep(c(16, 18), each=ns[i]), 3), xlab='', ylab='');#
+	title(main=names(ds)[i], cex.main=1.5); #
+	title(xlab=paste('PC1, ', round(100*summary(pcas[[i]])$importance[2,1], 2), '%', sep=''), cex.lab=1.5);#
+	title(ylab=paste('PC2, ', round(100*summary(pcas[[i]])$importance[2,2], 2), '%', sep=''), cex.lab=1.5);#
+	if (i == 1) {#
+		legend('topleft', pch=10, bty='n', col=col[seq(1, 6, 2)], legend=paste('Control,', c('B cell', 'Monocyte', 'T cell')), cex=0.85);#
+		legend('bottomleft', pch=13, bty='n', col=col[seq(2, 6, 2)], legend=paste('SLE,',     c('B cell', 'Monocyte', 'T cell')), cex=0.85);#
+	}#
+});
+col <- c('#FF888888', '#FF8888', '#8888FF88', '#8888FF', '#88FF8888', '#88FF88');#
+ds <- list('Coding gene'=d1, 'lncRNA'=d2, 'Repetitive element'=d3, 'H3K4me3'=d4);#
+ns <- c(3,3,3,6);#
+pcas <- lapply(ds, function(d) prcomp(t(d)));
+d1 <- readRDS('data_coding.rds');#
+d2 <- readRDS('data_lnc.rds');#
+d3 <- readRDS('data_re.rds');#
+d4 <- readRDS('data_tss.rds');
+dir()
+13548 * 0.039102
+13548 * 0.034102
+13548/2
+13548/2*0.039102 + 13548/2*0.034102
+13548/2*0.039102
+13548/2*0.039004
+118712.25 + 1940 + 11608.40
+132260.60 + 52.42
+2260.60 + 52.42
+132313.02 * 0.0307
+3645.19/118712.25
+4062.01 - 3645.19
+4062.01 * 0.9
+3848/5
+3436.54 + 4580.24
+3645.19 + 4876.88 + 416.82 + 529
+3645.19 + 4876.88 + 416.82 + 529 + 2332.30
+11800.19 + 4330.63
+16/50
+16000000000/50000000
+load("/Users/zhangz/Google Drive/Projects/Sullivan/2017-04_RNAseq-H3K4me3_Manuscript/r/TFBS/pwm_anno.rdata")
+load("/Users/zhangz/Google Drive/Projects/Sullivan/2017-04_RNAseq-H3K4me3_Manuscript/r/TFBS/pwm_anno.rdata")->x
+x
+dim(anno)
+head(anno)
+grep('ikaros', anno$Name, ignore.case=TRUE)
+anno[1424, ]
+125253-16130
+109123 - 16200
+4200/180
+4200/80
+55*80
+5+7+2+8+1+1+8+1+6+2+3
+5+7+2+8+1+1+8+1+6+2+3+8
+14774- 1969
+16910-12805
+install.packages('zoo')
+pkg0 <- installed.packages()
+pkg <- readRDS('~/Desktop/packages.rds')
+nm <- setdiff(rownames(pkg), rownames(pkg0))
+install.packages(nm[1:3])
+install.packages(nm)
+pkg0 <- installed.packages()
+nm <- setdiff(rownames(pkg), rownames(pkg0))
+length(nm)
+length(pkg)
+dim(pkg0)
+dim(pkg)
+Biocinstaller::bioclite
+## try http:// if https:// URLs are not supported#
+source("https://bioconductor.org/biocLite.R")#
+biocLite()
+pkg0 <- installed.packages()
+nm <- setdiff(rownames(pkg), rownames(pkg0))
+length(nm)
+args(biocLite)
+biocLite(nm)
+pkg0 <- installed.packages()
+nm <- setdiff(rownames(pkg), rownames(pkg0))
+nm
+BiocInstaller::biocLite('BSgenome.Mmusculus.UCSC.mm10')
+BiocInstaller::biocLite('BSgenome.Hsapiens.UCSC.hg19')
+pkg0 <- installed.packages()
+nm <- setdiff(rownames(pkg), rownames(pkg0))
+nm
+x <- nm[grep('[cdf|probe|.db]$', nm)]
+x
+x <- nm[grep('cdf$', nm)]
+x
+y <- nm[grep('probe$', nm)]
+z <- nm[grep('.db$', nm)]
+x
+y
+a <- c(x, y, z)
+a <- paste('/Users/zhangz/Library/R/3.2/library', a, sep='/')
+a
+file.exists(a)
+b <- sub('3.2', '3.3', a)
+file.rename(a, b)
+pkg0 <- installed.packages()
+nm <- setdiff(rownames(pkg), rownames(pkg0))
+nm
+a <- paste('zhezhangsh', nm, sep='/')
+for (i in 1:length(a)) devtools::install_github(a[i])
+pkg0 <- installed.packages()
+nm <- setdiff(rownames(pkg), rownames(pkg0))
+nm
+install_github('zhezhangsh/mvGSEA')
+devtools::install_github('zhezhangsh/mvGSEA')
+a
+b
+x <- '/Users/zhangz/Library/R/3.2/library/pd.hugene10st.hs.entrezg'
+y <- '/Users/zhangz/Library/R/3.3/library/pd.hugene10st.hs.entrezg'
+file.rename(x, y)
+pkg0 <- installed.packages()
+nm <- setdiff(rownames(pkg), rownames(pkg0))
+nm
+install_url('https://cran.r-project.org/src/contrib/Archive/multicore/multicore_0.2.tar.gz')
+library(devtools)
+install_url('https://cran.r-project.org/src/contrib/Archive/multicore/multicore_0.2.tar.gz')
+install_github('twitter/AnomalyDetection')
+install_local('~/Downloads/BBSeq/')
+install.packages("INLA", repos="https://inla.r-inla-download.org/R/stable", dep=TRUE)
+nm
+install_github('zhezhangsh/RoCAR')
+install_github('zhezhangsh/awsomicsR')
+install_github('markvdwiel/ShrinkBayes')
+install_url('https://cran.r-project.org/src/contrib/slam_0.1-42.tar.gz')
+install_url('https://cran.r-project.org/src/contrib/Archive/slam/slam_0.1-40.tar.gz')
+install_url('https://cran.r-project.org/src/contrib/Archive/slam/slam_0.1-39.tar.gz')
+nm
+install_url('https://cran.r-project.org/src/contrib/Archive/svcR/svcR_1.6.5.1.tar.gz')
+install_url('https://cran.r-project.org/src/contrib/Archive/VGAM/VGAM_1.0-3.tar.gz')
+install_url('https://cran.r-project.org/src/contrib/Archive/VGAM/VGAM_1.0-2.tar.gz')
+nm
+install_github('cran/VGAM')
+install_url('https://cran.r-project.org/bin/macosx/mavericks/contrib/3.3/VGAM_1.0-3.tgz')
+source("https://bioconductor.org/biocLite.R")#
+biocLite("AffyTiling")
+pkg0 <- installed.packages()
+nm <- setdiff(rownames(pkg), rownames(pkg0))
+nm
+require(AffyTiling)
+install_url('http://www.bioconductor.org/packages/3.3/bioc/src/contrib/AffyTiling_1.29.0.tar.gz')
+install_url('http://www.bioconductor.org/packages/3.2/bioc/src/contrib/AffyTiling_1.28.0.tar.gz')
+b[1]
+x <- b[1]
+x
+x <- '/Users/zhangz/Library/R/3.3/library/AffyTiling'
+y <- '/Users/zhangz/Library/R/3.2/library/AffyTiling'
+file.rename(y, x)
+dir('/Users/zhangz/Library/R/3.2/library/')
+dir('/Users/zhangz/Library/R/3.2/library/')[1:20]
+nm
+source("https://bioconductor.org/biocLite.R")#
+biocLite("Rolexa")
+require(Rolexa)
+y
+require(Rolexa)
+install_url('http://www.bioconductor.org/packages//2.11/bioc/src/contrib/Rolexa_1.14.0.tar.gz')
+nm
+# First run this line alone then paste rest.#
+#
+library("devtools")#
+source("http://bioconductor.org/biocLite.R")  #
+biocLite("GO.db")#
+biocLite("HSMMSingleCell")#
+biocLite("org.Mm.eg.db")#
+biocLite("org.Hs.eg.db")#
+biocLite("DESeq2")#
+biocLite("SingleCellExperiment")#
+biocLite("scater")#
+#
+# Install PIVOT#
+install_github("qinzhu/PIVOT")#
+biocLite("BiocGenerics") # You need the latest BiocGenerics >=0.23.3
+library(PIVOT)
+install_github("qinzhu/PIVOT")
+require(PIVOT)
+install.packages('SingleCellExperiment')
+biocLite('SingleCellExperiment')
+14/12
+18/18
+345+506
+851/12
+5.45*12
+506/65
+506/12
+345/12
+506+345+10
+861/12
+72*24
+12*80
+80/6
+24*80
+72*24
+345/12
+506/12
+80*24
+506+345+10
+861/12
+506/12
+345/12
+29+42
+506+345+100
+source("https://bioconductor.org/biocLite.R")#
+biocLite("RnaSeqSampleSize")
+108000/48
+total <- 0
+for (i in 1:100) total <- total + 1
+total
+total <- 0
+for (i in 1:100) total <- total + i
+total
+total <- 0
+for (i in 1:10000) total <- total + i
+total
+total <- 0
+i <- 1
+while (i < 101) {total <- total + i; i <- i + 1; }
+total
+setwd('~/Documents/RH/')
+setwd('R')
+f <- dir()
+f
+lapply(f, source)
+ls
+ls()
+x <- ls()[-5]
+x
+l <- paste('export("', x, ");', sep='')
+l <- paste('export("', x, ''");', sep='')
+l <- paste('export("', x, '");', sep='')
+l
+writeLines(l, '~/Documents/RH/l.txt')
