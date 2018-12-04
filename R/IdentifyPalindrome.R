@@ -108,7 +108,6 @@ OptimizePairwiseAlignment <- function(s1, s2, window.size=50, min.similarity=0.8
 
 SelectPalindromeSegment <- function(seq, stt, end, similarity=0.6) {
   require(Biostrings);
-  require(msa);
 
   # Order segments by location
   ord <- order(stt);

@@ -120,6 +120,36 @@ CallConsensus <- function(weighted) {
   cll;
 }
 
+AlignConsensus2Reference2 <- function(cons, ref) {
+  nms <- names(cons);
+  if (is.null(nms) | length(nms)!=length(cons)) nms <- paste('seq', 1:length(cons));
+  if (class(cons) != 'DNAStringSet') cons <- DNAStringSet(cons);
+  names(cons) <- nms;
+
+  aln <- lapply(names(cons), function(nm) {
+    cat(nm, '\n');
+    con <- cons[[nm]];
+    pw1 <- AlignConsensus2Reference(con, ref);
+    pw2 <- AlignConsensus2Reference(reverseComplement(con), ref);
+
+    if (score(pw1$alignment) >= score(pw2$alignment)) {
+      pw <- pw1;
+      pw$strand <- 1;
+    } else {
+      pw <- pw2;
+      pw$strand <- -1;
+    }
+    pw;
+  });
+  names(aln) <- nms;
+
+  stat <- t(sapply(aln, function(x) x[[3]]));
+  stat <- cbind(score=sapply(aln, function(a) score(a$alignment)), strand=sapply(aln, function(a) a$strand), stat);
+
+  list(summary=stat, consensus=cons, alignment=lapply(aln, function(a) a$alignment),
+       index=lapply(aln, function(a) a$index))
+}
+
 AlignConsensus2Reference <- function(con, ref) {
   require(S4Vectors);
   require(Biostrings);
