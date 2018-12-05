@@ -44,7 +44,7 @@ LoadBlasrBam <- function(fn, redo=FALSE) {
       se <- as.integer(loc[, 2]);
       
       hole <- x[, 1];
-      qname <- paste(hole, loc, sep='/');
+      qname <- paste(hole, x[, ncol(x)], sep='/');
       if (ncol(x) > 2) for (i in 2:(ncol(x)-1)) hole <- paste(hole, x[, i], sep='/');
       data.frame(qname=qname, hole=hole, ss=ss, se=se, stringsAsFactors = FALSE);
     } else if (tolower(flds[nm])[1] == 'flag') {
