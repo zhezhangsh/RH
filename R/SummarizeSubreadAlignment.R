@@ -25,11 +25,3 @@ SummarizeSubreadAlignment <- function(gr, seq) {
   cvd$MinSS <- sapply(gro, function(g) min(g$ss));
   cvd$MaxSE <- sapply(gro, function(g) max(g$se));
 }
-
-
-nonz <- lapply(gr0, function(gr) {
-  cov <- coverage(gr)[[1]];
-  cov[cov>1] <- 1;
-  cvd <- GRanges(seqlevels(gr), IRanges(start(cov), end(cov)));
-  cvd[runValue(cov)>0];
-})
