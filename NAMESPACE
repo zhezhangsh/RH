@@ -5,6 +5,7 @@ export("CountPairwiseMatchByWindow");
 export("ExtractSamField");
 export("IdentifyPalindrome");
 export("LigateSubread");
+export("LoadBlasrBam");
 export("MakeConsensus");
 export("OptimizeConsensus");
 export("OptimizePairwiseAlignment");
