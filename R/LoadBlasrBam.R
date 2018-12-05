@@ -60,7 +60,7 @@ LoadBlasrBam <- function(fn, redo=FALSE) {
     } 
   }); 
   meta <- do.call('cbind', meta);
-  meta <- meta[, c('hole', 'ss', 'se', 'qs', 'qe', 'as', 'flag', 'mapq')];
+  meta <- meta[, c('qname', 'hole', 'ss', 'se', 'qs', 'qe', 'as', 'flag', 'mapq')];
   elementMetadata(gr) <- meta;
   names(gr) <- rownames(meta) <- 1:length(gr); 
   
