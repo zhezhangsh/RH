@@ -50,8 +50,20 @@ IdentifyAlignmentSegment <- function(align, align.score, sub.start, sub.end, sco
         rg <- GRanges(chr, IRanges(start(cv), end(cv)))[runValue(cv)==1];
         gr2 <- lapply(1:length(rg), function(i) {
           g <- gr1[countOverlaps(gr1, rg[i])>0];
-          a2[names(g)];
+          g <- a2[names(g)];
+          g <- g[order(g$ss)];
+          g1 <- g[-1];
+          g2 <- g[-length(g)];
+          ol <- (start(g1)>=(start(g2)-max.gap) & start(g1)<=(end(g2)+max.gap)) |
+            end(g1)>=(start(g2)-max.gap) & end(g1)<=(end(g2)+max.gap);
+          if (length(ol[!ol])==0) g0 <- list(g) else {
+            i <- which(!ol);
+            i <- cbind(c(1, i+1), c(i, length(g)));
+            g0 <- apply(i, 1, function(i) g[i[1]:i[2]]);
+          };
+          g0;
         });
+        gr2 <- unlist(gr2);
         gr2 <- gr2[sapply(gr2, function(g) min(g$as)) <= score.best];
         
         if (length(gr2) == 0) NULL else {
