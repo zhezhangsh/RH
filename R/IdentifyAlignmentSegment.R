@@ -66,6 +66,7 @@ IdentifyAlignmentSegment <- function(align, align.score, sub.start, sub.end, sco
           gr3$se      <- end2;
           gr3$total   <- sapply(gr2, function(g) sum(g$as));
           gr3$mean    <- round(sapply(gr2, function(g) weighted.mean(g$as, g$se-g$ss+1)));
+          gr3$best   <- sapply(gr2, function(g) min(g$as));
           
           gr3;
         }
