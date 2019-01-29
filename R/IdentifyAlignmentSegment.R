@@ -56,6 +56,10 @@ IdentifyAlignmentSegment <- function(align, align.score, sub.start, sub.end, sco
           g2 <- g[-length(g)];
           ol <- (start(g1)>=(start(g2)-max.gap) & start(g1)<=(end(g2)+max.gap)) |
             end(g1)>=(start(g2)-max.gap) & end(g1)<=(end(g2)+max.gap);
+          td <- sign(start(g1)-start(g2));
+          td <- c(TRUE, td[-1]==td[-length(td)]);
+          td[which(!td[-length(td)])+1]<-TRUE;
+          ol <- ol & td;
           if (length(ol[!ol])==0) g0 <- list(g) else {
             i <- which(!ol);
             i <- cbind(c(1, i+1), c(i, length(g)));
