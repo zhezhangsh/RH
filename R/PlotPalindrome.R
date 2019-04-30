@@ -1,5 +1,7 @@
 PlotPalindrome <- function(start0, end0, start1, end1, strand, score=NA,
                            gene='', read='', type=c('read', 'gene')) {
+  
+  
   if (tolower(type[1])=='read') {
     xl <- 1000*c(floor(min(start1)/1000), ceiling(max(end1/1000)));
     xr <- xl[2]-xl[1];

@@ -9,6 +9,7 @@ export("LoadBlasrBam");
 export("MakeConsensus");
 export("OptimizeConsensus");
 export("OptimizePairwiseAlignment");
+export("ParseBlasrSam");
 export("PlotPalindrome");
 export("ScoreSegmentAlignment");
 export("SelectPalindromeSegment");
