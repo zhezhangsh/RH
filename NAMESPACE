@@ -4,6 +4,7 @@ export("CountPairwiseMatchByWindow");
 export("ExtractSamField");
 export("IdentifyAlignmentSegment");
 export("IdentifyPalindrome");
+export("ImportSubread2Genome");
 export("LigateSubread");
 export("LoadBlasrBam");
 export("MakeConsensus");
