@@ -1,5 +1,6 @@
 export("AlignConsensus2Reference");
 export("CallConsensus");
+export("ConvertCanuFasta");
 export("CountPairwiseMatchByWindow");
 export("ExtractSamField");
 export("IdentifyAlignmentSegment");
