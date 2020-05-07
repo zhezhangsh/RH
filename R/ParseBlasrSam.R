@@ -1,4 +1,4 @@
-ParseBlasrSam <- function(fname, primary.only=TRUE, include.cigar=FALSE) {
+ParseBlasrSam <- function(fname, primary.only=TRUE, include.cigar=FALSE, trim.read=TRUE) {
   require(GenomicAlignments);
   
   aln <- read.table(fname, sep='\t', comment.char = '@', header = FALSE, stringsAsFactors = FALSE);
@@ -37,7 +37,7 @@ ParseBlasrSam <- function(fname, primary.only=TRUE, include.cigar=FALSE) {
     len <- aln[aln$strand=='-', 'send'] - aln[aln$strand=='-', 'sstart'] + 1;
     aln[aln$strand=='-', c('qstart', 'qend')] <- cbind(len-aln[aln$strand=='-', 'qend'], len-aln[aln$strand=='-', 'qstart']);
   }
-  aln$sequence <- substr(aln$sequence, aln$qstart, aln$qend);
+  if (trim.read) aln$sequence <- substr(aln$sequence, aln$qstart, aln$qend);
   if (include.cigar) aln$cigar <- cig;
   
   aln; 
